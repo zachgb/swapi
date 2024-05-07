@@ -6,6 +6,8 @@ const baseUrl = `https://swapi2.azurewebsites.net/api`;
 // let planet = {};
 let planetCharacters = [];
 let characters =''
+let planetFilms = []
+let films = []
 let planetName = ''
 let climate = ''
 let population = ''
@@ -22,6 +24,7 @@ addEventListener('DOMContentLoaded', () => {
     const id = sp.get('id');
     getPlanet(id)
     fetchCharacters(id)
+    fetchFilms(id)
     
   });
 
@@ -54,29 +57,44 @@ async function fetchPlanet(id) {
   }
 
 async function fetchCharacters(id){
-    planetCharacters = await fetch(`${baseUrl}/planets/${id}/characters`).then(res =>res.json())
-    .then(response =>response.map(character=>planetCharacters.push(character))
-    )
+    planetCharacters = await fetch(`${baseUrl}/planets/${id}/characters`)
+    .then(res =>res.json())
     .catch(error => console.log(error))
 }
 
 async function fetchFilms(id){
-    planetFilms = await fetch(`${baseUrl}/planets/${id}/films`).then(res =>res.json())
-    .then(response =>{if (response.length=== 0) {throw new Error('no more films to display')}
-        else{
-            console.log(response)
-        }}
-    )
+    planetFilms = await fetch(`${baseUrl}/planets/${id}/films`)
+    .then(res =>res.json())
     .catch(error => console.log(error))
+
 }
 
 const renderPlanet = planet => {
+
     characters = document.querySelector('#characters')
-    characters.innerHTML = planetCharacters.map(character=>console.log(`<span>${character}</span>`) )
+    characters.innerHTML = planetCharacters.map(character=>`<li><a href="/character.html?id=${character.id}">${character.name}</li>` ).join('')
+    films = document.querySelector('#films')
+    films.innerHTML = planetFilms.map(film=>`<li><a href="/films.html?id=${film.id}">${film.title}</li>` ).join('')
     planetName.innerHTML = planet.name
     climate.innerHTML = planet.climate
     population.innerHTML = planet.population
     terrain.innerHTML = planet.terrain
+
+
+
+
+
+
+
+    // const charactersLis = film?.characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`)
+    // charactersUl.innerHTML = charactersLis.join("");
+    // const planetsLis = film?.planets?.map(planet => `<li><a href="/planets.html?id=${film.id}">${planet.name}</li>`)
+    // planetsUl.innerHTML = planetsLis.join("");
+
+
+
+
+
 
     // document.title = `SWAPI - ${character?.name}`;  // Just to make the browser tab say their name
     // nameH1.textContent = character?.name;
