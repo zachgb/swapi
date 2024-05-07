@@ -128,3 +128,21 @@ h1#title {
   margin: 50px;
 }
 
+#filmInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 20px;
+}
+
+#filmInfo p {
+  padding: 29px;
+  margin: 10px;
+  color: var(--dark2);
+  background-color: var(--light2);
+}
+
+#filmInfo span {
+  font-weight: bold;
+  font-size: 1.1em;
+}
